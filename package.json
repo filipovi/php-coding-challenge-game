@@ -1,0 +1,28 @@
+{
+  "name": "php-coding-challenge-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.go",
+  "directories": {},
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^4.2.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ma-residence/php-coding-challenge-game"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+  },
+  "homepage": "https://github.com/ma-residence/php-coding-challenge-game#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "gitroot=$(git rev-parse --show-toplevel) && cd $gitroot && go build"
+    }
+  }
+}
