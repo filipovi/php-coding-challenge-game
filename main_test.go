@@ -27,7 +27,7 @@ func (mcache *mockCache) InitTarget() Coordinates {
 	return Coordinates{X: 0, Y: 0}
 }
 
-func (mcache *mockCache) GetTarget() Coordinates {
+func (mcache *mockCache) GetTarget(userCoordinates Coordinates) Coordinates {
 	return Coordinates{X: 0, Y: 0}
 }
 

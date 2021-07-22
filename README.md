@@ -29,6 +29,8 @@ La cible doit être touchée trois fois pour être éliminer
 
 **Request**
 
+Permet au joueur de se déplacer sur la carte
+
 ```json
   POST /move
   {
@@ -53,6 +55,8 @@ La cible doit être touchée trois fois pour être éliminer
 
 **Request**
 
+Permet au joueur de tirer
+
 ```json
   POST /shoot
   {
@@ -71,7 +75,10 @@ La cible doit être touchée trois fois pour être éliminer
 
 ## Bonus
 
+
 **Request**
+
+Permet de visualiser la carte
 
 ```json
   GET /map

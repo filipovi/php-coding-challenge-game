@@ -14,8 +14,8 @@ type Client struct {
 
 func getCoordinate(pattern string, client Client) int {
 	data, _ := client.Get(pattern).Result()
-	y, _ := strconv.Atoi(data)
-	return y
+	coordinate, _ := strconv.Atoi(data)
+	return coordinate
 }
 
 func getCoordinates(pattern string, client Client) Coordinates {
@@ -27,9 +27,16 @@ func (client Client) GetUser() Coordinates {
 	return getCoordinates("pccg:user:", client)
 }
 
-// GetTarget returns the target coordinates
-func (client Client) GetTarget() Coordinates {
-	return getCoordinates("pccg:target:", client)
+// GetTarget returns the target coordinates if the user is in 2 cases away
+func (client Client) GetTarget(userCoordinates Coordinates) Coordinates {
+	targetCoordinates := getCoordinates("pccg:target:", client)
+
+	if abs(userCoordinates.X-targetCoordinates.X) < 3 {
+		if abs(userCoordinates.Y-targetCoordinates.Y) < 3 {
+			return targetCoordinates
+		}
+	}
+	return Coordinates{}
 }
 
 // Move moves the user in the specified direction
@@ -40,19 +47,19 @@ func (client Client) Move(direction string) Coordinates {
 
 	switch direction {
 	case "up":
-		if y > 0 {
+		if y > 1 {
 			y = y - 1
 		}
 	case "down":
-		if y < 20 {
+		if y < 21 {
 			y = y + 1
 		}
 	case "left":
-		if x > 0 {
+		if x > 1 {
 			x = x - 1
 		}
 	case "right":
-		if x < 20 {
+		if x < 21 {
 			x = x + 1
 		}
 	}
@@ -85,7 +92,7 @@ func (client Client) InitUser() Coordinates {
 
 // InitTarget set the starting coordinates for the target
 func (client Client) InitTarget() Coordinates {
-	return setCoordinates("pccg:target:", Coordinates{X: rand.Intn(21), Y: rand.Intn(21)}, client)
+	return setCoordinates("pccg:target:", Coordinates{X: rand.Intn(20) + 1, Y: rand.Intn(20) + 1}, client)
 }
 
 func getScore(client Client) int {
@@ -109,6 +116,13 @@ func (client Client) Shot(coordinates Coordinates) string {
 	_ = client.Set("pccg:user:score", score+1, 0)
 
 	return "touch"
+}
+
+func abs(val int) int {
+	if val < 0 {
+		return -val
+	}
+	return val
 }
 
 // New creates a new Redis Client

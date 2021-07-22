@@ -42,9 +42,12 @@ func TestInitUser(t *testing.T) {
 func TestGetTarget(t *testing.T) {
 	mclient := Client{newTestRedis()}
 	setTarget(Coordinates{X: 10, Y: 10}, mclient)
-	coordinates := mclient.GetTarget()
+	coordinates := mclient.GetTarget(Coordinates{X: 8, Y: 8})
 	assert.Equal(t, 10, coordinates.X)
 	assert.Equal(t, 10, coordinates.Y)
+	coordinates = mclient.GetTarget(Coordinates{X: 2, Y: 8})
+	assert.Equal(t, 0, coordinates.X)
+	assert.Equal(t, 0, coordinates.Y)
 }
 
 func TestGetUser(t *testing.T) {
@@ -84,11 +87,11 @@ func TestMove(t *testing.T) {
 	coordinates = mclient.Move("right")
 	assert.Equal(t, 11, coordinates.X)
 
-	_ = setUser(Coordinates{X: 20, Y: 20}, mclient)
+	_ = setUser(Coordinates{X: 21, Y: 21}, mclient)
 	coordinates = mclient.Move("down")
-	assert.Equal(t, 20, coordinates.Y)
+	assert.Equal(t, 21, coordinates.Y)
 	coordinates = mclient.Move("right")
-	assert.Equal(t, 20, coordinates.X)
+	assert.Equal(t, 21, coordinates.X)
 
 	_ = setUser(Coordinates{X: 0, Y: 0}, mclient)
 	coordinates = mclient.Move("up")

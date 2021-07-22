@@ -21,7 +21,7 @@ type Env struct {
 type Cache interface {
 	InitUser() Coordinates
 	InitTarget() Coordinates
-	GetTarget() Coordinates
+	GetTarget(userCoordinates Coordinates) Coordinates
 	GetUser() Coordinates
 	Shot(coordinates Coordinates) string
 	Move(direction string) Coordinates
@@ -78,7 +78,7 @@ func (env *Env) handleMoveRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	coordinates := env.cache.Move(direction["direction"])
-	content, err := json.Marshal(map[string]Coordinates{"position": coordinates, "target": env.cache.GetTarget()})
+	content, err := json.Marshal(map[string]Coordinates{"position": coordinates, "target": env.cache.GetTarget(coordinates)})
 	if nil != err {
 		send([]byte(err.Error()), "text/plain", http.StatusBadRequest, w)
 	}
