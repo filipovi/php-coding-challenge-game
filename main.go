@@ -23,8 +23,6 @@ type Cache interface {
 	InitTarget() Coordinates
 	GetTarget() Coordinates
 	GetUser() Coordinates
-	SetTarget(coordinates Coordinates) Coordinates
-	SetUser(coordinates Coordinates) Coordinates
 	Shot(coordinates Coordinates) string
 	Move(direction string) Coordinates
 }

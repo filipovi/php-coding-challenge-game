@@ -15,7 +15,6 @@ type Client struct {
 func getCoordinate(pattern string, client Client) int {
 	data, _ := client.Get(pattern).Result()
 	y, _ := strconv.Atoi(data)
-
 	return y
 }
 
@@ -69,11 +68,11 @@ func setCoordinates(pattern string, coordinates Coordinates, client Client) Coor
 	return coordinates
 }
 
-func (client Client) SetTarget(coordinates Coordinates) Coordinates {
+func setTarget(coordinates Coordinates, client Client) Coordinates {
 	return setCoordinates("pccg:target:", coordinates, client)
 }
 
-func (client Client) SetUser(coordinates Coordinates) Coordinates {
+func setUser(coordinates Coordinates, client Client) Coordinates {
 	return setCoordinates("pccg:user:", coordinates, client)
 }
 
